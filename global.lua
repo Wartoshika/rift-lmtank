@@ -16,6 +16,7 @@ LmTank = {
         },
 
         -- aggro feature
+        aggroColorFrequency = .5,
         colorAggroLost = {
             r = 1,
             g = 0,

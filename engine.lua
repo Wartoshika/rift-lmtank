@@ -89,8 +89,31 @@ function LmTank.Engine.eventAggro(_, units)
 
     end
 
-    dump(listOfUnitsHasAggro)
+    -- wenn ein spieler in der liste ist dann hat jemand aggro!
+    if LmTank.Util.tableLength(listOfUnitsHasAggro) > 0 then
 
+        -- aggro verloren
+        LmTank.Engine.enterAggroLostMode()
+    else
+
+        -- aggro wieder bekommen
+        LmTank.Engine.leaveAggroLostMode()
+    end
+
+end
+
+-- beginnt den aggro lost modus
+function LmTank.Engine.enterAggroLostMode()
+
+    -- farben aendern
+    LmTank.Ui.setDefaultColor(LmTank.Options.colorAggroLost, true)
+end
+
+-- beendet den aggro lost modus
+function LmTank.Engine.leaveAggroLostMode()
+
+    -- farben aendern
+    LmTank.Ui.setDefaultColor(nil, true)
 end
 
 -- kampf betreten?

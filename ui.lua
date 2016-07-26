@@ -1,4 +1,5 @@
 local context, frameLeft, frameTop, frameRight, frameBottom
+local currentDefaultColor = nil
 
 -- gui initialisieren
 function LmTank.Ui.init(addon)
@@ -49,6 +50,29 @@ function LmTank.Ui.init(addon)
 
 end
 
+-- setzt die standard farbe
+function LmTank.Ui.setDefaultColor(color, render)
+
+    -- farbe setzen
+    currentDefaultColor = color
+
+    -- default setzen wenn color nicht gesetzt ist
+    if not color then color = LmTank.Ui.setDefaultColor(LmTank.Options.color) end
+
+    -- neu rendern?
+    if render then
+
+        -- zeit holen
+        local duration = LmTank.Options.aggroColorFrequency
+
+        -- zeichnen
+        LmTank.Ui.frameSetBackgroundColor(frameLeft, currentDefaultColor, duration)
+        LmTank.Ui.frameSetBackgroundColor(frameRight, currentDefaultColor, duration)
+        LmTank.Ui.frameSetBackgroundColor(frameTop, currentDefaultColor, duration)
+        LmTank.Ui.frameSetBackgroundColor(frameBottom, currentDefaultColor, duration)
+    end
+end 
+
 -- zeigt die gui an
 function LmTank.Ui.show()
 
@@ -73,6 +97,22 @@ function LmTank.Ui.hide()
     frameTop:FadeOut(duration)
     frameRight:FadeOut(duration)
     frameBottom:FadeOut(duration)
+
+    -- default color wieder zuruecksetzen
+    LmTank.Ui.setDefaultColor(nil, true)
+end
+
+-- setzt via libanimate eine hintergrundfarbe
+function LmTank.Ui.frameSetBackgroundColor(frame, color, duration)
+
+    frame:AnimateBackgroundColor(
+        duration,
+        "smoothstep",
+        color.r,
+        color.g,
+        color.b,
+        color.a
+    )
 end
 
 -- laesst die gui pulsieren
@@ -81,88 +121,22 @@ function LmTank.Ui.pulse()
     -- animations daten holen
     local frequency = LmTank.Options.pulseFrequency
     local colorPulse = LmTank.Options.colorPulse
-    local colorDefault = LmTank.Options.color
     
     -- forwaerts animieren
-    frameLeft:AnimateBackgroundColor(
-        frequency,
-        "smoothstep",
-        colorPulse.r,
-        colorPulse.g,
-        colorPulse.b,
-        colorPulse.a
-    )
-
-    frameTop:AnimateBackgroundColor(
-        frequency,
-        "smoothstep",
-        colorPulse.r,
-        colorPulse.g,
-        colorPulse.b,
-        colorPulse.a
-    )
-
-    frameRight:AnimateBackgroundColor(
-        frequency,
-        "smoothstep",
-        colorPulse.r,
-        colorPulse.g,
-        colorPulse.b,
-        colorPulse.a
-    )
-
-    frameBottom:AnimateBackgroundColor(
-        frequency,
-        "smoothstep",
-        colorPulse.r,
-        colorPulse.g,
-        colorPulse.b,
-        colorPulse.a
-    )
-
+    LmTank.Ui.frameSetBackgroundColor(frameLeft, colorPulse, frequency)
+    LmTank.Ui.frameSetBackgroundColor(frameRight, colorPulse, frequency)
+    LmTank.Ui.frameSetBackgroundColor(frameTop, colorPulse, frequency)
+    LmTank.Ui.frameSetBackgroundColor(frameBottom, colorPulse, frequency)
 
     -- nach ein paar augenblicken
     StartTimer(frequency, function()
 
         -- rueckwaerts animieren
-        frameLeft:AnimateBackgroundColor(
-            frequency*2,
-            "smoothstep",
-            colorDefault.r,
-            colorDefault.g,
-            colorDefault.b,
-            colorDefault.a
-        )
-
-        frameTop:AnimateBackgroundColor(
-            frequency*2,
-            "smoothstep",
-            colorDefault.r,
-            colorDefault.g,
-            colorDefault.b,
-            colorDefault.a
-        )
-
-        frameRight:AnimateBackgroundColor(
-            frequency*2,
-            "smoothstep",
-            colorDefault.r,
-            colorDefault.g,
-            colorDefault.b,
-            colorDefault.a
-        )
-
-        frameBottom:AnimateBackgroundColor(
-            frequency*2,
-            "smoothstep",
-            colorDefault.r,
-            colorDefault.g,
-            colorDefault.b,
-            colorDefault.a
-        )
+        LmTank.Ui.frameSetBackgroundColor(frameLeft, currentDefaultColor, frequency*2)
+        LmTank.Ui.frameSetBackgroundColor(frameRight, currentDefaultColor, frequency*2)
+        LmTank.Ui.frameSetBackgroundColor(frameTop, currentDefaultColor, frequency*2)
+        LmTank.Ui.frameSetBackgroundColor(frameBottom, currentDefaultColor, frequency*2)
+        
     end)
-
-    
-    
 
 end
