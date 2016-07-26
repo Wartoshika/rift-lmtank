@@ -1,0 +1,29 @@
+Identifier = "LmTank"
+Name = "LooM Tank"
+Description = "Ein Tool um die Aggro beim Tanken zu ueberwachen"
+Author = "Wartoshika@Brutwacht"
+Email = "oliverwarrings@freenet.de"
+Version = "0.1"
+Environment = "3.7"
+
+SavedVariables = {
+  LmTankGlobal = 'account'
+}
+
+Embed = {
+	["vendor/LibAnimate"] = true,
+  ["vendor/libTimer"] = true,
+}
+
+Dependencies = {
+	LibAnimate = {"required", "before"},
+  libTimer = {"required", "before"}
+}
+
+RunOnStartup = {
+  "global.lua",
+  "util.lua",
+  "ui.lua",
+  "engine.lua",
+  "main.lua"
+}
