@@ -1,15 +1,15 @@
 -- globale varale
-LmUtil = {}
+LmUtils = {}
 
 -- gibt die laenge der tabelle zurueck
-function LmUtil.tableLength(table)
+function LmUtils.tableLength(table)
   local count = 0
   for _ in pairs(table) do count = count + 1 end
   return count
 end
 
 -- ala in_array
-function LmUtil.tableHasValue (tab, val)
+function LmUtils.tableHasValue (tab, val)
     for index, value in ipairs (tab) do
         if value == val then
             return true
@@ -20,12 +20,12 @@ function LmUtil.tableHasValue (tab, val)
 end
 
 -- abrunden
-function LmUtil.round(num)
+function LmUtils.round(num)
     return math.floor(num)
 end
 
 -- table key finden
-function LmUtil.findTableKey(table, value)
+function LmUtils.findTableKey(table, value)
 
     for k, v in pairs(table) do
 

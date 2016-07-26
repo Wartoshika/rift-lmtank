@@ -13,16 +13,17 @@ SavedVariables = {
 Embed = {
 	["vendor/LibAnimate"] = true,
   ["vendor/libTimer"] = true,
+  ["vendor/lmutils"] = true,
 }
 
 Dependencies = {
 	LibAnimate = {"required", "before"},
-  libTimer = {"required", "before"}
+  libTimer = {"required", "before"},
+  LmUtils = {"required", "before"}
 }
 
 RunOnStartup = {
   "global.lua",
-  "util.lua",
   "ui.lua",
   "engine.lua",
   "main.lua"
