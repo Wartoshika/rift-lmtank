@@ -51,11 +51,14 @@ local function initCheckRole()
     -- funktion zum pruefen ob der spieler verfuegbar ist
     local function chkPlayer(_, players)
 
+        -- eigener player
+        local currentPlayer = Inspect.Unit.Detail("player").id
+
         -- ist es der spieler?
         for player, v in pairs(players) do
 
             -- ist es der spieler?
-            if v == "player" then
+            if v == "player" and player == currentPlayer then
 
                 -- bind entfernen da spieler gefunden
                 Command.Event.Detach(Event.Unit.Availability.Full, chkPlayer, "initCheckRolePlayer")
