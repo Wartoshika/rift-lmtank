@@ -19,7 +19,7 @@ function LmTank.Engine.eventCombat(_, units)
     local foundPlayer = false
     for unit, combatFlag in pairs(units) do
 
-        _combatFlag = combatFlag 
+        _combatFlag = combatFlag
 
         -- spieler gefunden?
         if unit == player.id then
@@ -63,7 +63,7 @@ end
 
 -- event wenn sich die aggro veraendert
 function LmTank.Engine.eventAggro(_, units)
-    
+
     -- nur wenn im kampf
     if not LmTank.Engine.getCombatState() then return end
 
@@ -76,7 +76,7 @@ function LmTank.Engine.eventAggro(_, units)
         if aggro then
 
             -- unit hat nun aggro. melden!
-            if not LmTank.Util.tableHasValue(listOfUnitsHasAggro, unit) then
+            if not LmUtils.tableHasValue(listOfUnitsHasAggro, unit) then
 
                 -- stacken wenn nicht schon vorhanden
                 table.insert(listOfUnitsHasAggro, unit)
@@ -84,13 +84,13 @@ function LmTank.Engine.eventAggro(_, units)
         else
 
             -- vom stapel nehmen weil nun keine aggro mehr vorhanden ist
-            table.remove(listOfUnitsHasAggro, LmTank.Util.findTableKey(listOfUnitsHasAggro, unit))
+            table.remove(listOfUnitsHasAggro, LmUtils.findTableKey(listOfUnitsHasAggro, unit))
         end
 
     end
 
     -- wenn ein spieler in der liste ist dann hat jemand aggro!
-    if LmTank.Util.tableLength(listOfUnitsHasAggro) > 0 then
+    if LmUtils.tableLength(listOfUnitsHasAggro) > 0 then
 
         -- aggro verloren
         LmTank.Engine.enterAggroLostMode()
